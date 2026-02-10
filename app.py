@@ -104,6 +104,9 @@ def stock_update():
     )
 
     return jsonify(stock_update_res.json()), stock_update_res.status_code
+@app.route("/ping", methods=["GET"])
+def ping():
+    return {"status": "ok"}
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
