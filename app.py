@@ -12,13 +12,8 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # Load credentials
-import os
-
-credentials = {
-    "key_id": os.getenv("NOON_KEY_ID"),
-    "private_key": os.getenv("NOON_PRIVATE_KEY"),
-    "project_code": os.getenv("NOON_PROJECT_CODE")
-}
+with open("credentials.json", "r") as f:
+    credentials = json.load(f)
 
 # ---------- JWT ----------
 def create_jwt():
@@ -104,9 +99,6 @@ def stock_update():
     )
 
     return jsonify(stock_update_res.json()), stock_update_res.status_code
-@app.route("/ping", methods=["GET"])
-def ping():
-    return {"status": "ok"}
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
