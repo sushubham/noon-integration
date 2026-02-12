@@ -99,6 +99,16 @@ def stock_update():
     )
 
     return jsonify(stock_update_res.json()), stock_update_res.status_code
+@app.route("/fbpi-order/<fbpi_order_nr>", methods=["GET"])
+def get_fbpi_order(fbpi_order_nr):
+    session = get_session()
+
+    url = f"https://noon-api-gateway.noon.partners/fbpi/v1/fbpi-order/{fbpi_order_nr}/get"
+
+    resp = session.get(url)
+
+    return resp.json(), resp.status_code
+
 # ---------- RUN ----------
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
