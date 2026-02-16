@@ -150,6 +150,33 @@ def get_fbpi_order(fbpi_order_nr):
 
 
 # -------------------------------
+# FBPI ORDER GET
+# -------------------------------
+@app.route("/fbpi-order/get/<fbpi_order_nr>", methods=["GET"])
+def fetch_fbpi_order(fbpi_order_nr):
+    session = get_session()
+
+    url = f"https://noon-api-gateway.noon.partners/fbpi/v1/fbpi-order/{fbpi_order_nr}/get"
+
+    response = session.get(url)
+
+    return jsonify(response.json()), response.status_code
+
+# -------------------------------
+# FBPI ORDER UPDATE
+# -------------------------------
+@app.route("/fbpi-order/update", methods=["POST"])
+def update_fbpi_order():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/fbpi-order/update",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+# -------------------------------
 # RUN (Render uses Gunicorn)
 # -------------------------------
 if __name__ == "__main__":
