@@ -176,6 +176,119 @@ def update_fbpi_order():
     )
 
     return jsonify(response.json()), response.status_code
+
+# -------------------------------
+# CREATE SHIPMENT
+# -------------------------------
+@app.route("/shipment/create", methods=["POST"])
+def create_shipment():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/shipment/create",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+
+
+# -------------------------------
+# CANCEL SHIPMENT
+# -------------------------------
+@app.route("/shipment/cancel", methods=["POST"])
+def cancel_shipment():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/shipment/cancel",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+
+# -------------------------------
+# GET SHIPMENT
+# -------------------------------
+@app.route("/shipment/get", methods=["POST"])
+def get_shipment():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/shipment/get",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+
+# -------------------------------
+# GET NOON LOGISTICS AWBs
+# -------------------------------
+@app.route("/shipment/noon-logistics-awbs", methods=["POST"])
+def get_noon_logistics_awbs():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/shipment/noon-logistics-awbs/get",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+# -------------------------------
+# FBPI ORDERS LIST
+# -------------------------------
+@app.route("/fbpi-orders/list", methods=["POST"])
+def list_fbpi_orders():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/fbpi-orders/list",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+# -------------------------------
+# FBPI ORDER CUSTOMER DETAILS
+# -------------------------------
+@app.route("/fbpi-order/<fbpi_order_nr>/customer-details", methods=["GET"])
+def get_customer_details(fbpi_order_nr):
+    session = get_session()
+
+    url = f"https://noon-api-gateway.noon.partners/fbpi/v1/fbpi-order/{fbpi_order_nr}/customer-details/get"
+
+    response = session.get(url)
+
+    return jsonify(response.json()), response.status_code
+# -------------------------------
+# FBPI ORDER UPDATE (ITEM LEVEL)
+# -------------------------------
+@app.route("/fbpi-order/update-items", methods=["POST"])
+def update_fbpi_order_items():
+    payload = request.json
+    session = get_session()
+
+    response = session.post(
+        "https://noon-api-gateway.noon.partners/fbpi/v1/fbpi-order/update",
+        json=payload
+    )
+
+    return jsonify(response.json()), response.status_code
+# -------------------------------
+# FBPO PURCHASE ORDER GET
+# -------------------------------
+@app.route("/fbpo/<po_nr>", methods=["GET"])
+def get_purchase_order(po_nr):
+    session = get_session()
+
+    url = f"https://noon-api-gateway.noon.partners/fbpo/v1/po/{po_nr}/get"
+
+    response = session.get(url)
+
+    return jsonify(response.json()), response.status_code
 # -------------------------------
 # RUN (Render uses Gunicorn)
 # -------------------------------
